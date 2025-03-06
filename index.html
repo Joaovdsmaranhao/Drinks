@@ -6,13 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Quiosque Bola Azul</title>
   <link rel="icon" type="image/png" href="bola-removebg-preview.png">
-  <meta property="og:title" content="Quiosque Bola Azul">
-  <meta property="og:description" content="O melhor quiosque da praia! Venha conferir nossos drinks.">
-  <meta property="og:image" content="bola-removebg-preview.png">
-  <meta property="og:url" content="https://drinks-pi.vercel.app/">
-  <meta name="twitter:card" content="summary_large_image">
-
-
   <style>
     :root {
       --primary-color: #007BFF;
@@ -68,11 +61,49 @@
     .item:hover {
       transform: scale(1.05);
     }
-    .item img {
+    .item img { 
       border-radius: 10px;
       margin-bottom: 10px;
-      width: 100%;
+      width: 90%;
     }
+    .menu .item:nth-child(1) img {
+      width: 130px;
+      height: 90px;
+    }
+    .menu .item:nth-child(2) img {
+      width: 130px;
+      height: 90px;
+    }
+    .menu .item:nth-child(3) img {
+      width: 150px;
+      height: 155px;
+    }
+ 
+    .menu .item:nth-child(4) img {
+      width: 130px;
+      height: 200px;
+    }
+
+    .menu .item:nth-child(5) img {
+      width: 130px;
+      height: 200px;
+    }
+
+    .menu .item:nth-child(6) img {
+      width: 130px;
+      height: 200px;
+    }
+
+    .menu .item:nth-child(7) img {
+      width: 130px;
+      height: 200px;
+    }
+
+    .menu .item:nth-child(8) img {
+      width: 130px;
+      height: 200px;
+    }
+    
     .price {
       font-weight: bold;
       color: var(--accent-color);
@@ -219,7 +250,7 @@
           "Limão": {price: 25, img: "caipi_limao.jpg", description: "Cachaça, limão e açúcar."}, 
           "Maracujá": {price: 30, img: "caip_maracuja.jpg", description: "Cachaça, maracujá e açúcar."},
           'Morango': {price: 30, img: "caipirinha_morango.jpg", description: "Cachaça, morango e açúcar."},
-          'Kiwi': {price: 30, img: "caipirinha_kiwi.jpg", description: "Cachaça, kiwi e açúcar."},
+          'Kiwi': {price: 30, img: "caip_kiwi.png", description: "Cachaça, kiwi e açúcar."},
         } 
       },
       { 
@@ -242,8 +273,8 @@
         {
         name: "Gin Tropical",
         flavors: {
-           "Tradicional": {price: 40, img: "gin_tropical.png", description: "Gin, água tônica, abacaxi e hortelã."},
-           "Frutas Vermelhas": {price: 40, img: "gin_tropical_frutas_vermelhas.jpeg", description: "Gin, água tônica, frutas vermelhas e hortelã."},
+           "Tradicional": {price: 40, img: "gin_tropical.jpg", description: "Gin,redbull tropical e frutas"},
+           "Frutas Vermelhas": {price: 40, img: "gin_tropical_frutas_vermelhas.jpeg", description: "Gin,Redbull Tropical e Frutas Vermelhas."},
         }
 
         },
@@ -257,10 +288,29 @@
       { 
         name: "Campari",
         flavors: { 
-          "Tradicional": {price: 35, img: "campari.jpeg", description: "Campari, espumante e água com gás."},
+          "Tradicional": {price: 35, img: "campari.jpg", description: "Campari, espumante e água com gás."},
         }
+
+      },
+      {
+        name: "Drink Da Casa",
+        flavors: { 
+          "Tradicional": {price: 35, img: "casa.jpg", description: "malibu,curaçau blue,gin,espuma de limao e gelo."},
+        }
+        },
+        {
+        name: "pina colada",
+        flavors: { 
+          "Tradicional": {price: 35, img: "pina_colada.jpg", description: "rum,leite de coco,suco de abacaxi e gelo."},
+        }
+        },
+        {
+        // flavors: { 
+        //   "Tradicional": {price: 35, img: "campari.jpg", description: "Campari, espumante e água com gás."},
+        // }
         
       },
+  
       
     ];
 
@@ -312,11 +362,70 @@
       modalImage.alt = `${currentDrink.name} - ${selectedFlavor}`;
       modalPrice.innerText = `R$${selectedData.price},00`;
       modalDescription.innerText = selectedData.description;
+
+      const combination = `${currentDrink.name}/${selectedFlavor}`;
+
+       switch (combination) {
+    case "Caipirinha/Limão":
+      modalImage.style.width = "auto";
+      modalImage.style.height = "auto";
+      break;
+    case "Caipivodka/Limão":
+    modalImage.style.width = "auto";
+    modalImage.style.height = "auto";
+      break;
+    case "caipirinha/Maracujá":
+      modalImage.style.width = "200px";
+      modalImage.style.height = "340px";
+      break;
+    case "Caipirinha/Maracujá":
+    modalImage.style.width = "200px";
+    modalImage.style.height = "340px";
+    break;
+    case "Caipirinha/Morango":
+      modalImage.style.width = "200px";
+      modalImage.style.height = "350px";
+      break;
+
+    case "Caipivodka/Morango":
+    modalImage.style.width = "250px";
+    modalImage.style.height = "370px";
+    break;
+
+    case "Kiwi":
+      modalImage.style.width = "auto";
+      modalImage.style.height = "auto";
+      break;
+    case "Caipivodka/Kiwi":
+    modalImage.style.width = "280px";
+    modalImage.style.height = "340px";
+    break;
+    case "pitaya":
+      default:
+      modalImage.style.width = "200px";
+      modalImage.style.height = "340px";
+      break;
+
+    case "Gin Tônica/Tradicional":
+      modalImage.style.width = "280px";
+      modalImage.style.height = "240px";
+      break;
+
+    case "Gin Tropical/Frutas Vermelhas":
+      modalImage.style.width = "220px";
+      modalImage.style.height = "430px";
+      break;
     }
+  
+  }
 
     function closeModal() {
       document.getElementById("modal").style.display = "none";
     }
+
+
+    
+    
 
     window.onload = loadMenu;
   </script>
