@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <!-- Meta viewport atualizado para evitar zoom desnecessário -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Quiosque Bola Azul</title>
+  <style>
+    :root {
+      --primary-color: #007BFF;
+      --accent-color: #FFD700;
+      --modal-bg: rgba(0, 0, 0, 0.8);
+      --item-bg: rgba(0, 0, 0, 0.7);
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('praia.jpg');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: var(--primary-color);
+      padding: 10px;
+      font-size: 40px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      margin: 20px;
+    }
+    header img {
+      width: 100px;
+      height: 50px;
+      margin: 0 20px;
+    }
+    main {
+      padding: 20px;
+    }
+    .menu {
+         display: grid;
+         grid-template-columns: repeat(5, 1fr);
+         grid-template-rows: repeat(3, auto);
+         gap: 20px;
+         justify-content: center;
+         margin-top: 20px;
+         padding: 20px;
+    }
+    .item {
+      background: var(--item-bg);
+      border-radius: 20px;
+      padding: 15px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .item:hover {
+      transform: scale(1.05);
+    }
+    .item img {
+      border-radius: 10px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    .price {
+      font-weight: bold;
+      color: var(--accent-color);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--modal-bg);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: black;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+    }
+    .modal-content img {
+      border-radius: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .close {
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      color: red;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+    }
+    .flavor-container {
+      margin-top: 10px;
+    }
+    footer {
+      background: black;
+      color: white;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    footer img {
+      width: 20px;
+      margin-right: 10px;
+    }
+    .flavor-select {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    /* Adições para responsividade mobile */
+    @media (max-width: 600px) {
+      header {
+        font-size: 30px;
+        padding: 5px;
+        margin: 10px;
+        flex-direction: column;
+      }
+      header img {
+        width: 80px;
+        height: auto;
+        margin: 5px 0;
+      }
+      .menu {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+      }
+      .item {
+        padding: 10px;
+      }
+      .modal-content {
+        max-width: 90%;
+        width: 80%;
+        right: 20px;
+      }
+      footer {
+        flex-direction: column;
+        padding: 5px;
+      }
+      footer img {
+        margin-bottom: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="bola-removebg-preview.png" alt="Logo Bola Azul">
+    Menu de drinks
+    
+  </header>
+  
+  <main>
+    <section class="menu" id="menu"></section>
+  </main>
+  
+  <div class="modal" id="modal" aria-modal="true" role="dialog">
+    <div class="modal-content">
+      <button class="close" onclick="closeModal()" aria-label="Fechar">&times;</button>
+      <h2 id="modal-title"></h2>
+      <img id="modal-image" src="" alt="Imagem da bebida">
+      <p id="modal-price"></p>
+      <p id="modal-description"></p>
+      <div id="flavor-container" class="flavor-container" style="display: none;">
+        <label for="flavor-select">Escolha o sabor:</label>
+        <select id="flavor-select" class="flavor-select" onchange="updatePriceAndImage()"></select>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <img src="INSTA.jpg" alt="Logo Instagram">
+    @quiosquebolazul
+  </footer>
+  
+  <script>
+    const drinks = [
+      { 
+        name: "Caipirinha", 
+        flavors: { 
+          "Limão": {price: 25, img: "caipi_limao.jpg", description: "Cachaça, limão e açúcar."}, 
+          "Maracujá": {price: 30, img: "caip_maracuja.jpg", description: "Cachaça, maracujá e açúcar."},
+          'Morango': {price: 30, img: "caipirinha_morango.jpg", description: "Cachaça, morango e açúcar."},
+          'Kiwi': {price: 30, img: "caipirinha_kiwi.jpg", description: "Cachaça, kiwi e açúcar."},
+        } 
+      },
+      { 
+        name: "Caipivodka", 
+        flavors: { 
+          "Limão": {price: 35, img: "vodfka_limao.jpg", description: "Vodka, limão e açúcar."}, 
+          "Morango": {price: 35, img: "vodka_morango.jpg", description: "Vodka, morango e açúcar."},
+          'Maracujá': {price: 35, img: "vodka_maracuja.jpg", description: "Vodka, maracujá e açúcar."},
+          'Kiwi': {price: 35, img: "vodka_kiwi.jpg", description: "Vodka, kiwi e açúcar."},
+          'pitaya': {price: 35, img: "vodka_pitaya.jpg", description: "Vodka, pitaya e açúcar."},
+        } 
+      },
+      { 
+        name: "Gin Tônica",
+        flavors: { 
+          "Tradicional": {price: 35, img: "gin_tonica.jpg", description: "Gin, água tônica e limão."} ,
+        } 
+      
+      },
+        {
+        name: "Gin Tropical",
+        flavors: {
+           "Tradicional": {price: 40, img: "gin_tropical.png", description: "Gin, água tônica, abacaxi e hortelã."},
+           "Frutas Vermelhas": {price: 40, img: "gin_tropical_frutas_vermelhas.jpeg", description: "Gin, água tônica, frutas vermelhas e hortelã."},
+        }
+
+        },
+      
+      { 
+        name: "Aperol Spritz",
+        flavors: { 
+          "Tradicional": {price: 35, img: "aperol.jpg", description: "Aperol, espumante e água com gás."},
+        } 
+      },
+      { 
+        name: "Campari",
+        flavors: { 
+          "Tradicional": {price: 35, img: "campari.jpeg", description: "Campari, espumante e água com gás."},
+        }
+        
+      },
+      
+    ];
+
+    let currentDrink = null;
+
+    function loadMenu() {
+      const menu = document.getElementById("menu");
+      drinks.forEach(drink => {
+        const item = document.createElement("div");
+        item.classList.add("item");
+        const defaultFlavor = Object.values(drink.flavors)[0];
+        item.innerHTML = `
+          <img src="${defaultFlavor.img}" alt="${drink.name}">
+          <h3>${drink.name}</h3>
+          <p class="price">R$${defaultFlavor.price},00</p>
+        `;
+        item.onclick = () => openModal(drink);
+        menu.appendChild(item);
+      });
+    }
+
+    function openModal(drink) {
+      currentDrink = drink;
+      const modal = document.getElementById("modal");
+      const modalTitle = document.getElementById("modal-title");
+      const flavorSelect = document.getElementById("flavor-select");
+      const flavorContainer = document.getElementById("flavor-container");
+
+      modalTitle.innerText = drink.name;
+      const flavors = Object.keys(drink.flavors);
+      flavorSelect.innerHTML = flavors.map(f => `<option value="${f}">${f}</option>`).join("");
+      updatePriceAndImage();
+      flavorContainer.style.display = flavors.length > 1 ? "block" : "none";
+
+      modal.style.display = "flex";
+    }
+
+    function updatePriceAndImage() {
+      if (!currentDrink) return;
+      const flavorSelect = document.getElementById("flavor-select");
+      const selectedFlavor = flavorSelect.value;
+      const modalImage = document.getElementById("modal-image");
+      const modalPrice = document.getElementById("modal-price");
+      const modalDescription = document.getElementById("modal-description");
+
+      const selectedData = currentDrink.flavors[selectedFlavor];
+
+      modalImage.src = selectedData.img;
+      modalImage.alt = `${currentDrink.name} - ${selectedFlavor}`;
+      modalPrice.innerText = `R$${selectedData.price},00`;
+      modalDescription.innerText = selectedData.description;
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    window.onload = loadMenu;
+  </script>
+</body>
+</html>
