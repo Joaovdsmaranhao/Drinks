@@ -15,44 +15,64 @@
       --bg-black: #000000;
       --dropdown-bg: #000;
     }
+
     /* Reset básico */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: Arial, sans-serif;
-      background-image: url('praia.jpg');
+      background-image: url('praia.jpg'); /* Fundo de praia */
       background-size: cover;
       background-position: center;
       color: var(--text-color);
       margin: 0;
       padding: 0;
     }
-    /* Cabeçalho */
+
+    /* ====== CABEÇALHO COM GRADIENTE E ONDA ====== */
     header {
-      background-color: var(--primary-color);
-      padding: 10px 20px;
-      font-size: 40px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 20px;
-      margin: 20px;
+      position: relative; 
+      /* Gradiente diagonal (pode trocar cores se quiser) */
+      background: linear-gradient(135deg, #0099ff, #66ccff);
+      text-align: center;
       color: #fff;
+      padding: 40px 20px 70px; /* Espaçamento extra embaixo para a onda */
+      overflow: hidden;       /* Garante que o ::after não “vaze” */
     }
-    header img {
+    /* Container interno do header */
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    /* Logo */
+    .header-content img {
       width: 100px;
       height: auto;
-      margin-right: 20px;
+      margin-bottom: 10px;
     }
+    /* Título principal */
+    .header-content h1 {
+      font-size: 40px;
+      margin: 10px 0 5px 0;
+      font-weight: bold;
+    }
+    /* Subtítulo opcional */
+    .header-content p.subtitle {
+      font-size: 20px;
+      font-weight: 300;
+    }
+    /* ====== FIM CABEÇALHO ====== */
+
     /* Conteúdo principal */
     main {
       padding: 20px;
       text-align: center;
     }
+
     /* Grade do menu */
     .menu {
       display: grid;
@@ -61,6 +81,7 @@
       justify-items: center;
       margin-top: 20px;
     }
+
     /* Card do item */
     .item {
       background: var(--item-bg);
@@ -92,6 +113,7 @@
       font-size: 16px;
       margin-bottom: 10px;
     }
+
     /* Dropdown customizado */
     .custom-dropdown {
       position: relative;
@@ -130,8 +152,7 @@
       z-index: 10;
     }
     .dropdown-options.open {
-      /* Altura máxima para animar o "cascata" */
-      max-height: 200px;
+      max-height: 200px; /* Altura máxima para o efeito "cascata" */
       transition: max-height 0.5s ease-in;
     }
     .dropdown-options li {
@@ -147,6 +168,7 @@
       background-color: var(--accent-color);
       color: #000;
     }
+
     /* Footer */
     footer {
       background: black;
@@ -169,16 +191,17 @@
       text-decoration: none;
       font-weight: bold;
     }
+
     /* Responsividade para telas menores */
     @media (max-width: 600px) {
-      header {
+      .header-content h1 {
         font-size: 30px;
-        margin: 10px;
-        flex-direction: column;
       }
-      header img {
+      .header-content img {
         width: 80px;
-        margin: 5px 0;
+      }
+      .header-content p.subtitle {
+        font-size: 16px;
       }
       .menu {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -192,15 +215,22 @@
   </style>
 </head>
 <body>
+  <!-- CABEÇALHO -->
   <header>
-    <img src="bola-removebg-preview.png" alt="Logo Bola Azul">
-    Menu de drinks
+    <div class="header-content">
+      <img src="bola-removebg-preview.png" alt="Logo Bola Azul">
+      <h1>Menu de Drinks</h1>
+      <!-- Subtítulo opcional -->
+      <p class="subtitle">Refresque-se com os melhores sabores do Quiosque Bola Azul!</p>
+    </div>
   </header>
   
+  <!-- CONTEÚDO PRINCIPAL -->
   <main>
     <section class="menu" id="menu"></section>
   </main>
   
+  <!-- RODAPÉ -->
   <footer>
     <img src="INSTA.jpg" alt="Logo Instagram">
     <a href="https://www.instagram.com/quiosquebolaazul/" target="_blank">
@@ -208,6 +238,7 @@
     </a>
   </footer>
   
+  <!-- SCRIPT DE CRIAÇÃO DOS CARDS -->
   <script>
     const drinks = [
       { 
@@ -268,17 +299,14 @@
       }
     ];
 
-    // Função para criar o componente customizado do dropdown
+    // Cria dropdown customizado
     function createCustomDropdown(flavors, index) {
       const flavorKeys = Object.keys(flavors);
-      // Cria a div base
       const dropdown = document.createElement("div");
       dropdown.classList.add("custom-dropdown");
       dropdown.id = `dropdown-${index}`;
-      // Exibe a primeira opção como padrão
       dropdown.innerText = flavorKeys[0];
 
-      // Cria a lista de opções
       const optionsList = document.createElement("ul");
       optionsList.classList.add("dropdown-options");
       
@@ -287,12 +315,9 @@
         li.innerText = flavor;
         li.dataset.value = flavor;
         li.addEventListener("click", function(e) {
-          // Atualiza a seleção
           dropdown.innerText = flavor;
           dropdown.appendChild(optionsList);
-          // Atualiza o card de acordo com o sabor escolhido
           updateCardFlavor(index, flavors, flavor);
-          // Fecha o dropdown
           optionsList.classList.remove("open");
           e.stopPropagation();
         });
@@ -300,8 +325,6 @@
       });
 
       dropdown.appendChild(optionsList);
-
-      // Toggle da lista de opções ao clicar no dropdown
       dropdown.addEventListener("click", function(e) {
         optionsList.classList.toggle("open");
         e.stopPropagation();
@@ -309,7 +332,7 @@
       return dropdown;
     }
 
-    // Atualiza imagem e preço do card de acordo com o sabor selecionado
+    // Atualiza imagem e preço conforme sabor
     function updateCardFlavor(index, flavors, selectedFlavor) {
       const flavorData = flavors[selectedFlavor];
       const imgElem = document.getElementById(`img-${index}`);
@@ -319,24 +342,21 @@
       priceElem.innerText = `R$${flavorData.price},00`;
     }
 
-    // Carrega o menu e cria os cards
+    // Carrega o menu
     function loadMenu() {
       const menu = document.getElementById("menu");
       drinks.forEach((drink, index) => {
         const item = document.createElement("div");
         item.classList.add("item");
 
-        // Primeiro sabor como padrão
         const defaultFlavorKey = Object.keys(drink.flavors)[0];
         const defaultFlavor = drink.flavors[defaultFlavorKey];
 
-        // Cria o conteúdo do card
         item.innerHTML = `
           <img id="img-${index}" src="${defaultFlavor.img}" alt="${drink.name}">
           <h3>${drink.name}</h3>
           <p class="price" id="price-${index}">R$${defaultFlavor.price},00</p>
         `;
-        // Se houver mais de um sabor, adiciona o dropdown customizado
         if(Object.keys(drink.flavors).length > 1) {
           const dropdown = createCustomDropdown(drink.flavors, index);
           item.appendChild(dropdown);
@@ -345,7 +365,7 @@
       });
     }
 
-    // Fecha todos os dropdowns se clicar fora
+    // Fecha dropdowns ao clicar fora
     document.addEventListener("click", function() {
       document.querySelectorAll(".dropdown-options").forEach(list => {
         list.classList.remove("open");
