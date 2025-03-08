@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <!-- Meta viewport atualizado para evitar zoom desnecessário -->
+  <!-- Meta viewport para responsividade -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Quiosque Bola Azul</title>
   <link rel="icon" type="image/png" href="bola-removebg-preview.png">
@@ -10,22 +10,30 @@
     :root {
       --primary-color: #007BFF;
       --accent-color: #FFD700;
-      --modal-bg: rgba(0, 0, 0, 0.8);
       --item-bg: rgba(0, 0, 0, 0.7);
+      --text-color: #FFFFFF;
+      --bg-black: #000000;
+      --dropdown-bg: #000;
+    }
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
     body {
       font-family: Arial, sans-serif;
       background-image: url('praia.jpg');
       background-size: cover;
       background-position: center;
-      text-align: center;
-      color: white;
+      color: var(--text-color);
       margin: 0;
       padding: 0;
     }
+    /* Cabeçalho */
     header {
       background-color: var(--primary-color);
-      padding: 10px;
+      padding: 10px 20px;
       font-size: 40px;
       font-weight: bold;
       display: flex;
@@ -33,123 +41,113 @@
       align-items: center;
       border-radius: 20px;
       margin: 20px;
+      color: #fff;
     }
     header img {
       width: 100px;
-      height: 50px;
-      margin: 0 20px;
+      height: auto;
+      margin-right: 20px;
     }
+    /* Conteúdo principal */
     main {
       padding: 20px;
+      text-align: center;
     }
+    /* Grade do menu */
     .menu {
-         display: grid;
-         grid-template-columns: repeat(5, 1fr);
-         grid-template-rows: repeat(3, auto);
-         gap: 20px;
-         justify-content: center;
-         margin-top: 20px;
-         padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+      justify-items: center;
+      margin-top: 20px;
     }
+    /* Card do item */
     .item {
       background: var(--item-bg);
       border-radius: 20px;
       padding: 15px;
-      cursor: pointer;
-      transition: transform 0.3s;
+      width: 200px; 
+      margin: 0 auto;
+      transition: box-shadow 0.3s;
+      text-align: center; 
+      position: relative;
     }
     .item:hover {
-      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
-    .item img { 
+    .item img {
       border-radius: 10px;
       margin-bottom: 10px;
-      width: 90%;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
     }
-    .menu .item:nth-child(1) img {
-      width: 130px;
-      height: 90px;
+    .item h3 {
+      margin: 10px 0 5px 0;
+      font-size: 18px;
     }
-    .menu .item:nth-child(2) img {
-      width: 130px;
-      height: 90px;
-    }
-    .menu .item:nth-child(3) img {
-      width: 150px;
-      height: 155px;
-    }
- 
-    .menu .item:nth-child(4) img {
-      width: 130px;
-      height: 200px;
-    }
-
-    .menu .item:nth-child(5) img {
-      width: 130px;
-      height: 200px;
-    }
-
-    .menu .item:nth-child(6) img {
-      width: 130px;
-      height: 200px;
-    }
-
-    .menu .item:nth-child(7) img {
-      width: 130px;
-      height: 200px;
-    }
-
-    .menu .item:nth-child(8) img {
-      width: 130px;
-      height: 200px;
-    }
-    
     .price {
       font-weight: bold;
       color: var(--accent-color);
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--modal-bg);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      color: black;
-      max-width: 400px;
-      width: 100%;
-      position: relative;
-    }
-    .modal-content img {
-      border-radius: 10px;
-      width: 100%;
+      font-size: 16px;
       margin-bottom: 10px;
     }
-    .close {
+    /* Dropdown customizado */
+    .custom-dropdown {
+      position: relative;
+      width: 100%;
+      max-width: 180px;
+      margin: 0 auto;
+      user-select: none;
       cursor: pointer;
-      font-size: 24px;
-      font-weight: bold;
-      color: red;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      background-color: var(--dropdown-bg);
+      color: #fff;
+      padding: 6px 10px;
+      font-size: 14px;
+    }
+    .custom-dropdown::after {
+      content: "▼";
       position: absolute;
-      top: 10px;
       right: 10px;
-      background: transparent;
-      border: none;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
     }
-    .flavor-container {
-      margin-top: 10px;
+    .dropdown-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: var(--dropdown-bg);
+      border: 1px solid #fff;
+      border-top: none;
+      border-radius: 0 0 5px 5px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease-out;
+      z-index: 10;
     }
+    .dropdown-options.open {
+      /* Altura máxima para animar o "cascata" */
+      max-height: 200px;
+      transition: max-height 0.5s ease-in;
+    }
+    .dropdown-options li {
+      list-style: none;
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid #fff;
+    }
+    .dropdown-options li:last-child {
+      border-bottom: none;
+    }
+    .dropdown-options li:hover {
+      background-color: var(--accent-color);
+      color: #000;
+    }
+    /* Footer */
     footer {
       background: black;
       color: white;
@@ -166,46 +164,29 @@
       width: 20px;
       margin-right: 10px;
     }
-    .flavor-select {
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      cursor: pointer;
+    footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
     }
-    
-    /* Adições para responsividade mobile */
+    /* Responsividade para telas menores */
     @media (max-width: 600px) {
       header {
         font-size: 30px;
-        padding: 5px;
         margin: 10px;
         flex-direction: column;
       }
       header img {
         width: 80px;
-        height: auto;
         margin: 5px 0;
       }
       .menu {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 10px;
-        padding: 10px;
       }
       .item {
         padding: 10px;
-      }
-      .modal-content {
-        max-width: 90%;
-        width: 80%;
-        right: 20px;
-      }
-      footer {
-        flex-direction: column;
-        padding: 5px;
-      }
-      footer img {
-        margin-bottom: 5px;
+        max-width: 160px;
       }
     }
   </style>
@@ -214,30 +195,15 @@
   <header>
     <img src="bola-removebg-preview.png" alt="Logo Bola Azul">
     Menu de drinks
-    
   </header>
   
   <main>
     <section class="menu" id="menu"></section>
   </main>
   
-  <div class="modal" id="modal" aria-modal="true" role="dialog">
-    <div class="modal-content">
-      <button class="close" onclick="closeModal()" aria-label="Fechar">&times;</button>
-      <h2 id="modal-title"></h2>
-      <img id="modal-image" src="" alt="Imagem da bebida">
-      <p id="modal-price"></p>
-      <p id="modal-description"></p>
-      <div id="flavor-container" class="flavor-container" style="display: none;">
-        <label for="flavor-select">Escolha o sabor:</label>
-        <select id="flavor-select" class="flavor-select" onchange="updatePriceAndImage()"></select>
-      </div>
-    </div>
-  </div>
-  
   <footer>
     <img src="INSTA.jpg" alt="Logo Instagram">
-    <a href="https://www.instagram.com/quiosquebolaazul/" target="_blank" style="color: white; text-decoration: none;">
+    <a href="https://www.instagram.com/quiosquebolaazul/" target="_blank">
       @quiosquebolazul
     </a>
   </footer>
@@ -249,8 +215,8 @@
         flavors: { 
           "Limão": {price: 25, img: "caipi_limao.jpg", description: "Cachaça, limão e açúcar."}, 
           "Maracujá": {price: 30, img: "caip_maracuja.jpg", description: "Cachaça, maracujá e açúcar."},
-          'Morango': {price: 30, img: "caipirinha_morango.jpg", description: "Cachaça, morango e açúcar."},
-          'Kiwi': {price: 30, img: "caip_kiwi.png", description: "Cachaça, kiwi e açúcar."},
+          "Morango": {price: 30, img: "caipirinha_morango.jpg", description: "Cachaça, morango e açúcar."},
+          "Kiwi": {price: 30, img: "caip_kiwi.png", description: "Cachaça, kiwi e açúcar."}
         } 
       },
       { 
@@ -258,174 +224,133 @@
         flavors: { 
           "Limão": {price: 35, img: "vodfka_limao.jpg", description: "Vodka, limão e açúcar."}, 
           "Morango": {price: 35, img: "vodka_morango.jpg", description: "Vodka, morango e açúcar."},
-          'Maracujá': {price: 35, img: "vodka_maracuja.jpg", description: "Vodka, maracujá e açúcar."},
-          'Kiwi': {price: 35, img: "vodka_kiwi.jpg", description: "Vodka, kiwi e açúcar."},
-          'pitaya': {price: 35, img: "vodka_pitaya.jpg", description: "Vodka, pitaya e açúcar."},
+          "Maracujá": {price: 35, img: "vodka_maracuja.jpg", description: "Vodka, maracujá e açúcar."},
+          "Kiwi": {price: 35, img: "vodka_kíwi.jpg", description: "Vodka, kiwi e açúcar."},
+          "Pitaya": {price: 35, img: "vodka_pitaya.jpg", description: "Vodka, pitaya e açúcar."}
         } 
       },
       { 
         name: "Gin Tônica",
         flavors: { 
-          "Tradicional": {price: 35, img: "gin_tonica.jpg", description: "Gin, água tônica e limão."} ,
+          "Tradicional": {price: 35, img: "gin_tonica.jpg", description: "Gin, água tônica e limão."}
         } 
-      
       },
-        {
+      {
         name: "Gin Tropical",
         flavors: {
-           "Tradicional": {price: 40, img: "gin_tropical.jpg", description: "Gin,redbull tropical e frutas"},
-           "Frutas Vermelhas": {price: 40, img: "gin_tropical_frutas_vermelhas.jpeg", description: "Gin,Redbull Tropical e Frutas Vermelhas."},
+           "Tradicional": {price: 40, img: "gin_tropical.jpg", description: "Gin, Red Bull Tropical e frutas."},
+           "Frutas Vermelhas": {price: 40, img: "gin_tropical_frutas_vermelhas.jpeg", description: "Gin, Red Bull Tropical e frutas vermelhas."}
         }
-
-        },
-      
+      },
       { 
         name: "Aperol Spritz",
         flavors: { 
-          "Tradicional": {price: 35, img: "aperol.jpg", description: "Aperol, espumante e água com gás."},
+          "Tradicional": {price: 35, img: "aperol.jpg", description: "Aperol, espumante e água com gás."}
         } 
       },
       { 
         name: "Campari",
         flavors: { 
-          "Tradicional": {price: 35, img: "campari.jpg", description: "Campari, espumante e água com gás."},
+          "Tradicional": {price: 35, img: "campari.jpg", description: "Campari, espumante e água com gás."}
         }
-
       },
       {
         name: "Drink Da Casa",
         flavors: { 
-          "Tradicional": {price: 35, img: "casa.jpg", description: "malibu,curaçau blue,gin,espuma de limao e gelo."},
+          "Tradicional": {price: 35, img: "casa.jpg", description: "Malibu, curaçau blue, gin, espuma de limão e gelo."}
         }
-        },
-        {
-        name: "pina colada",
-        flavors: { 
-          "Tradicional": {price: 35, img: "pina_colada.jpg", description: "rum,leite de coco,suco de abacaxi e gelo."},
-        }
-        },
-        {
-        // flavors: { 
-        //   "Tradicional": {price: 35, img: "campari.jpg", description: "Campari, espumante e água com gás."},
-        // }
-        
       },
-  
-      
+      {
+        name: "Pina Colada",
+        flavors: { 
+          "Tradicional": {price: 35, img: "pina_colada.jpg", description: "Rum, leite de coco, suco de abacaxi e gelo."}
+        }
+      }
     ];
 
-    let currentDrink = null;
+    // Função para criar o componente customizado do dropdown
+    function createCustomDropdown(flavors, index) {
+      const flavorKeys = Object.keys(flavors);
+      // Cria a div base
+      const dropdown = document.createElement("div");
+      dropdown.classList.add("custom-dropdown");
+      dropdown.id = `dropdown-${index}`;
+      // Exibe a primeira opção como padrão
+      dropdown.innerText = flavorKeys[0];
 
+      // Cria a lista de opções
+      const optionsList = document.createElement("ul");
+      optionsList.classList.add("dropdown-options");
+      
+      flavorKeys.forEach(flavor => {
+        const li = document.createElement("li");
+        li.innerText = flavor;
+        li.dataset.value = flavor;
+        li.addEventListener("click", function(e) {
+          // Atualiza a seleção
+          dropdown.innerText = flavor;
+          dropdown.appendChild(optionsList);
+          // Atualiza o card de acordo com o sabor escolhido
+          updateCardFlavor(index, flavors, flavor);
+          // Fecha o dropdown
+          optionsList.classList.remove("open");
+          e.stopPropagation();
+        });
+        optionsList.appendChild(li);
+      });
+
+      dropdown.appendChild(optionsList);
+
+      // Toggle da lista de opções ao clicar no dropdown
+      dropdown.addEventListener("click", function(e) {
+        optionsList.classList.toggle("open");
+        e.stopPropagation();
+      });
+      return dropdown;
+    }
+
+    // Atualiza imagem e preço do card de acordo com o sabor selecionado
+    function updateCardFlavor(index, flavors, selectedFlavor) {
+      const flavorData = flavors[selectedFlavor];
+      const imgElem = document.getElementById(`img-${index}`);
+      const priceElem = document.getElementById(`price-${index}`);
+      imgElem.src = flavorData.img;
+      imgElem.alt = `${flavorData.description} - ${selectedFlavor}`;
+      priceElem.innerText = `R$${flavorData.price},00`;
+    }
+
+    // Carrega o menu e cria os cards
     function loadMenu() {
       const menu = document.getElementById("menu");
-      drinks.forEach(drink => {
+      drinks.forEach((drink, index) => {
         const item = document.createElement("div");
         item.classList.add("item");
-        const defaultFlavor = Object.values(drink.flavors)[0];
+
+        // Primeiro sabor como padrão
+        const defaultFlavorKey = Object.keys(drink.flavors)[0];
+        const defaultFlavor = drink.flavors[defaultFlavorKey];
+
+        // Cria o conteúdo do card
         item.innerHTML = `
-          <img src="${defaultFlavor.img}" alt="${drink.name}">
+          <img id="img-${index}" src="${defaultFlavor.img}" alt="${drink.name}">
           <h3>${drink.name}</h3>
-          <p class="price">R$${defaultFlavor.price},00</p>
+          <p class="price" id="price-${index}">R$${defaultFlavor.price},00</p>
         `;
-        item.onclick = () => openModal(drink);
+        // Se houver mais de um sabor, adiciona o dropdown customizado
+        if(Object.keys(drink.flavors).length > 1) {
+          const dropdown = createCustomDropdown(drink.flavors, index);
+          item.appendChild(dropdown);
+        }
         menu.appendChild(item);
       });
     }
 
-    function openModal(drink) {
-      currentDrink = drink;
-      const modal = document.getElementById("modal");
-      const modalTitle = document.getElementById("modal-title");
-      const flavorSelect = document.getElementById("flavor-select");
-      const flavorContainer = document.getElementById("flavor-container");
-
-      modalTitle.innerText = drink.name;
-      const flavors = Object.keys(drink.flavors);
-      flavorSelect.innerHTML = flavors.map(f => `<option value="${f}">${f}</option>`).join("");
-      updatePriceAndImage();
-      flavorContainer.style.display = flavors.length > 1 ? "block" : "none";
-
-      modal.style.display = "flex";
-    }
-
-    function updatePriceAndImage() {
-      if (!currentDrink) return;
-      const flavorSelect = document.getElementById("flavor-select");
-      const selectedFlavor = flavorSelect.value;
-      const modalImage = document.getElementById("modal-image");
-      const modalPrice = document.getElementById("modal-price");
-      const modalDescription = document.getElementById("modal-description");
-
-      const selectedData = currentDrink.flavors[selectedFlavor];
-
-      modalImage.src = selectedData.img;
-      modalImage.alt = `${currentDrink.name} - ${selectedFlavor}`;
-      modalPrice.innerText = `R$${selectedData.price},00`;
-      modalDescription.innerText = selectedData.description;
-
-      const combination = `${currentDrink.name}/${selectedFlavor}`;
-
-       switch (combination) {
-    case "Caipirinha/Limão":
-      modalImage.style.width = "auto";
-      modalImage.style.height = "auto";
-      break;
-    case "Caipivodka/Limão":
-    modalImage.style.width = "auto";
-    modalImage.style.height = "auto";
-      break;
-    case "caipirinha/Maracujá":
-      modalImage.style.width = "200px";
-      modalImage.style.height = "340px";
-      break;
-    case "Caipirinha/Maracujá":
-    modalImage.style.width = "200px";
-    modalImage.style.height = "340px";
-    break;
-    case "Caipirinha/Morango":
-      modalImage.style.width = "200px";
-      modalImage.style.height = "350px";
-      break;
-
-    case "Caipivodka/Morango":
-    modalImage.style.width = "250px";
-    modalImage.style.height = "370px";
-    break;
-
-    case "Kiwi":
-      modalImage.style.width = "auto";
-      modalImage.style.height = "auto";
-      break;
-    case "Caipivodka/Kiwi":
-    modalImage.style.width = "280px";
-    modalImage.style.height = "340px";
-    break;
-    case "pitaya":
-      default:
-      modalImage.style.width = "200px";
-      modalImage.style.height = "340px";
-      break;
-
-    case "Gin Tônica/Tradicional":
-      modalImage.style.width = "280px";
-      modalImage.style.height = "240px";
-      break;
-
-    case "Gin Tropical/Frutas Vermelhas":
-      modalImage.style.width = "220px";
-      modalImage.style.height = "430px";
-      break;
-    }
-  
-  }
-
-    function closeModal() {
-      document.getElementById("modal").style.display = "none";
-    }
-
-
-    
-    
+    // Fecha todos os dropdowns se clicar fora
+    document.addEventListener("click", function() {
+      document.querySelectorAll(".dropdown-options").forEach(list => {
+        list.classList.remove("open");
+      });
+    });
 
     window.onload = loadMenu;
   </script>
