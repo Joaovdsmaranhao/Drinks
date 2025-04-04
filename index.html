@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <!-- Meta viewport para responsividade -->
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Quiosque Bola Azul</title>
   <link rel="icon" type="image/png" href="bola-removebg-preview.png">
@@ -16,7 +16,7 @@
       --dropdown-bg: #000;
     }
 
-    /* Reset básico */
+   
     * {
       margin: 0;
       padding: 0;
@@ -25,7 +25,7 @@
 
     body {
       font-family: Arial, sans-serif;
-      background-image: url('praia.jpg'); /* Fundo de praia */
+      background-image: url('praia.jpg'); 
       background-size: cover;
       background-position: center;
       color: var(--text-color);
@@ -33,47 +33,47 @@
       padding: 0;
     }
 
-    /* ====== CABEÇALHO COM GRADIENTE E ONDA ====== */
+   
     header {
       position: relative; 
-      /* Gradiente diagonal (pode trocar cores se quiser) */
+   
       background: linear-gradient(135deg, #0099ff, #66ccff);
       text-align: center;
       color: #fff;
-      padding: 40px 20px 70px; /* Espaçamento extra embaixo para a onda */
-      overflow: hidden;       /* Garante que o ::after não “vaze” */
+      padding: 40px 20px 70px; 
+      overflow: hidden;       
     }
-    /* Container interno do header */
+  
     .header-content {
       max-width: 1200px;
       margin: 0 auto;
     }
-    /* Logo */
+
     .header-content img {
       width: 100px;
       height: auto;
       margin-bottom: 10px;
     }
-    /* Título principal */
+    
     .header-content h1 {
       font-size: 40px;
       margin: 10px 0 5px 0;
       font-weight: bold;
     }
-    /* Subtítulo opcional */
+    
     .header-content p.subtitle {
       font-size: 20px;
       font-weight: 300;
     }
-    /* ====== FIM CABEÇALHO ====== */
+  
 
-    /* Conteúdo principal */
+
     main {
       padding: 20px;
       text-align: center;
     }
 
-    /* Grade do menu */
+
     .menu {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -82,7 +82,7 @@
       margin-top: 20px;
     }
 
-    /* Card do item */
+
     .item {
       background: var(--item-bg);
       border-radius: 20px;
@@ -114,7 +114,6 @@
       margin-bottom: 10px;
     }
 
-    /* Dropdown customizado */
     .custom-dropdown {
       position: relative;
       width: 100%;
@@ -152,7 +151,7 @@
       z-index: 10;
     }
     .dropdown-options.open {
-      max-height: 200px; /* Altura máxima para o efeito "cascata" */
+      max-height: 200px; 
       transition: max-height 0.5s ease-in;
     }
     .dropdown-options li {
@@ -169,7 +168,7 @@
       color: #000;
     }
 
-    /* Footer */
+ 
     footer {
       background: black;
       color: white;
@@ -192,7 +191,7 @@
       font-weight: bold;
     }
 
-    /* Responsividade para telas menores */
+ 
     @media (max-width: 600px) {
       .header-content h1 {
         font-size: 30px;
@@ -215,22 +214,22 @@
   </style>
 </head>
 <body>
-  <!-- CABEÇALHO -->
+
   <header>
     <div class="header-content">
       <img src="bola-removebg-preview.png" alt="Logo Bola Azul">
       <h1>Menu de Drinks</h1>
-      <!-- Subtítulo opcional -->
+   
       <p class="subtitle">Refresque-se com os melhores sabores do Quiosque Bola Azul!</p>
     </div>
   </header>
   
-  <!-- CONTEÚDO PRINCIPAL -->
+
   <main>
     <section class="menu" id="menu"></section>
   </main>
   
-  <!-- RODAPÉ -->
+
   <footer>
     <img src="INSTA.jpg" alt="Logo Instagram">
     <a href="https://www.instagram.com/quiosquebolaazul/" target="_blank">
@@ -238,7 +237,7 @@
     </a>
   </footer>
   
-  <!-- SCRIPT DE CRIAÇÃO DOS CARDS -->
+
   <script>
     const drinks = [
       { 
@@ -299,7 +298,7 @@
       }
     ];
 
-    // Cria dropdown customizado
+
     function createCustomDropdown(flavors, index) {
       const flavorKeys = Object.keys(flavors);
       const dropdown = document.createElement("div");
@@ -332,7 +331,7 @@
       return dropdown;
     }
 
-    // Atualiza imagem e preço conforme sabor
+
     function updateCardFlavor(index, flavors, selectedFlavor) {
       const flavorData = flavors[selectedFlavor];
       const imgElem = document.getElementById(`img-${index}`);
@@ -342,7 +341,7 @@
       priceElem.innerText = `R$${flavorData.price},00`;
     }
 
-    // Carrega o menu
+ 
     function loadMenu() {
       const menu = document.getElementById("menu");
       drinks.forEach((drink, index) => {
@@ -365,7 +364,7 @@
       });
     }
 
-    // Fecha dropdowns ao clicar fora
+
     document.addEventListener("click", function() {
       document.querySelectorAll(".dropdown-options").forEach(list => {
         list.classList.remove("open");
